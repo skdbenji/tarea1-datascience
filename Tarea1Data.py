@@ -99,5 +99,3 @@ def analizar_consistencia(reporte):
         print(f"{est['nombre']:<12} {est['promedio']:<6.2f} {est['rendimiento']:<12} "
               f"{est['nota_maxima']:<5} {est['nota_minima']:<5} {est['rango_notas']:<6.2f}")
 
-reporte = generar_reporte(estudiantes)
-analizar_consistencia(reporte)
