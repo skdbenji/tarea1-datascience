@@ -64,139 +64,34 @@ def ordenar_reporte(reporte_estudiantes,clave="promedio",descendente=True):
     return sorted(reporte_estudiantes,key=lambda fila: fila[clave],reverse=descendente)
 
 def buscar_estudiante(estudiantes, nombre):
-    
-    iterador = 0
-    
-    for iterador in estudiantes:
-        nombre_estudiante = iterador["nombre"]
+    for estudiante in estudiantes: 
+        if estudiante["nombre"].lower() == nombre.lower():
+            return estudiante
+    return none
 
-        if nombre_estudiante.lower() == nombre.lower():
-            return iterador
-    
-    return None
-
-#Busca estudiantes cuyo promedio esta dentro de un rango
 def buscar_por_rango_promedio(reporte, minimo, maximo):
-    """Estudiantes con promedio en [minimo, maximo]."""
+    resultados = []
+    for estudiante in reporte:
+        if minimo <= estudiante["promedio"] <= maximo:
+            resultados.append(estudiante)
+    return resultados
 
-    iterador = 0 #Iterador para recorrer los datos
-    resultado = [] #Lista para almacenar los estudiantes que cumplen
-
-    #Bucle para recorrer el reporte
-    for iterador in reporte:
-        
-        promedio = iterador["promedio"] #Obtiene el promedio del estudiante
-        
-        #Verifica que el promedio este dentro del rango
-        if promedio >= minimo and promedio <= maximo:
-            
-            resultado.append(iterador) #Agrega el estudiante a la lista
+def analizar_consistencia(reporte):
+    if not reporte:
+        return
+    # Inicializamos con el primer estudiante del reporte
+    mas_consistente = reporte[0]
+    mas_inconsistente = reporte[0]
+    for estudiante in reporte:
+        # Menor rango = Más consistente
+        if estudiante["rango"] < mas_consistente["rango"]:
+            mas_consistente = estudiante
+        # Mayor rango = Más inconsistente
+        if estudiante["rango"] > mas_inconsistente["rango"]:
+            mas_inconsistente = estudiante
+    print(f"Más consistente: {mas_consistente['nombre']} (Rango: {mas_consistente['rango']:.1f})")
+    print(f"Más inconsistente: {mas_inconsistente['nombre']} (Rango: {mas_inconsistente['rango']:.1f})")
     
-    #Retorna la lista de estudiantes que cumplen la condicion
-    return resultado
-
-#Calcula el con menos valor en los datos
-def calcular_minimo(datos):
-    minimo = datos[0]
-    for iterador in datos:
-        if iterador < minimo:
-            minimo = iterador
-    return minimo
-
-
-#Calcula el con mas valor en los datos
-def calcular_maximo(datos):
-    maximo = datos[0]
-    for iterador in datos:
-        if iterador > maximo:
-            maximo = iterador
-    return maximo
-
-#Esta funcion se encarga de sumar los datos 
-def calcular_suma(datos):
-
-    suma = 0
-    iterador = 0
-
-    for iterador in datos:
-        suma = suma + iterador
-    
-    return suma
-
-
-#Esta funcion se encarga de calcular el largo del arreglo
-def calcular_largo(datos):
-
-    iterador = 0
-    contador_largo = 0
-
-    for iterador in datos:
-        contador_largo = contador_largo + 1
-    
-    return contador_largo
-
-
-#Esta funcion calcula el promedio de los datos
-def calcular_promedio(datos):
-
-    promedio = calcular_suma(datos) / calcular_largo(datos)
-    
-    return promedio
-
-#Identifica al estudiante mas consistente e inconsistente
-def analizar_consistencia(estudiantes):
-
-    iterador = 0 #Iterador para recorrer los datos
-
-    mas_consistente = None
-    mas_inconsistente = None
-
-    menor_rango = None
-    mayor_rango = None
-
-    #Bucle para recorrer los estudiantes
-    for iterador in estudiantes:
-
-        notas = iterador["notas"] #Obtiene las notas del estudiante
-
-        minimo = calcular_minimo(notas) #Nota minima
-        maximo = calcular_maximo(notas) #Nota maxima
-
-        rango = maximo - minimo #Diferencia entre max y min
-
-        #Primer caso (inicializar)
-        if menor_rango is None or rango < menor_rango:
-            menor_rango = rango
-            mas_consistente = iterador
-
-        if mayor_rango is None or rango > mayor_rango:
-            mayor_rango = rango
-            mas_inconsistente = iterador
-
-    return mas_consistente, mas_inconsistente
-
-#Imprime el reporte en formato tabla
-def imprimir_tabla(estudiantes):
-
-    print("Nombre       Promedio   Min   Max   Rango")
-    print("------------------------------------------------")
-
-    iterador = 0
-
-    for iterador in estudiantes:
-
-        nombre = iterador["nombre"]
-        notas = iterador["notas"]
-
-        promedio = calcular_promedio(notas)
-        minimo = calcular_minimo(notas)
-        maximo = calcular_maximo(notas)
-
-        rango = maximo - minimo
-
-        print(nombre, "   ", round(promedio,2), "   ", minimo, "   ", maximo, "   ", rango)
-
-reporte = generar_reporte(estudiantes)
 #Prueba para generar el reporte
 print("=== Reporte completo ===")
 for fila in reporte:
