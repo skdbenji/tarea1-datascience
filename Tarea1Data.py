@@ -75,50 +75,29 @@ def buscar_por_rango_promedio(reporte, minimo, maximo):
         if minimo <= estudiante["promedio"] <= maximo:
             resultados.append(estudiante)
     return resultados
-
-def analizar_consistencia(reporte):
-    if not reporte:
-        return
-    # Inicializamos con el primer estudiante del reporte
-    mas_consistente = reporte[0]
-    mas_inconsistente = reporte[0]
-    for estudiante in reporte:
-        # Menor rango = Más consistente
-        if estudiante["rango"] < mas_consistente["rango"]:
-            mas_consistente = estudiante
-        # Mayor rango = Más inconsistente
-        if estudiante["rango"] > mas_inconsistente["rango"]:
-            mas_inconsistente = estudiante
-    print(f"Más consistente: {mas_consistente['nombre']} (Rango: {mas_consistente['rango']:.1f})")
-    print(f"Más inconsistente: {mas_inconsistente['nombre']} (Rango: {mas_inconsistente['rango']:.1f})")
     
-#Prueba para generar el reporte
-print("=== Reporte completo ===")
-for fila in reporte:
-    print(fila)
+def analizar_consistencia(reporte):
+    mas_consistente = None
+    mas_inconsistente = None
 
-print("\n=== Conteo por rendimiento ===")
-print(contar_por_estado(reporte))
+    for est in reporte:
+        if mas_consistente is None or est["rango_notas"] < mas_consistente["rango_notas"]:
+            mas_consistente = est
 
-print("\n=== Estudiantes destacados ===")
-for fila in filtrar_por_estado(reporte, "Destacado"):
-    print(fila)
+        if mas_inconsistente is None or est["rango_notas"] > mas_inconsistente["rango_notas"]:
+            mas_inconsistente = est
 
-print("\n=== Reporte ordenado por promedio ===")
-for fila in ordenar_reporte(reporte):
-    print(fila)
+    print("\n=== ANÁLISIS DE CONSISTENCIA ===")
+    print(f"Más consistente: {mas_consistente['nombre']} (rango: {mas_consistente['rango_notas']})")
+    print(f"Más inconsistente: {mas_inconsistente['nombre']} (rango: {mas_inconsistente['rango_notas']})")
 
+    print("\n=== REPORTE COMPLETO ===")
+    print(f"{'Nombre':<12} {'Prom':<6} {'Estado':<12} {'Max':<5} {'Min':<5} {'Rango':<6}")
+    print("-" * 55)
 
-busqueda = buscar_estudiante(estudiantes,"ana")
-print(busqueda)
+    for est in reporte:
+        print(f"{est['nombre']:<12} {est['promedio']:<6.2f} {est['rendimiento']:<12} "
+              f"{est['nota_maxima']:<5} {est['nota_minima']:<5} {est['rango_notas']:<6.2f}")
 
-busqueda_rango = buscar_por_rango_promedio(reporte,5.0, 6.0)
-print("Estudiantes con promedio: ",busqueda_rango)
-
-
-imprimir_tabla(estudiantes)
-
-consistente, inconsistente = analizar_consistencia(estudiantes)
-
-print("\nMas consistente:", consistente["nombre"])
-print("Mas inconsistente:", inconsistente["nombre"])
+reporte = generar_reporte(estudiantes)
+analizar_consistencia(reporte)
