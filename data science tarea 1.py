@@ -1,0 +1,289 @@
+   {"nombre": "Ana", "notas": [6.5, 7.0, 5.8]},
+    {"nombre": "Luis", "notas": [4.2, 5.1, 6.0]},
+    {"nombre": "Sofía", "notas": [3.9, 4.0, 4.5]},
+    {"nombre": "Pedro", "notas": [5.5, 6.1, 5.9]},
+    {"nombre": "Valentina", "notas": [7.0, 6.8, 6.9]},
+    {"nombre": "Javier", "notas": [4.0, 4.2, 4.1]},
+    {"nombre": "Camila", "notas": [5.0, 5.5, 5.8]},
+    {"nombre": "Martín", "notas": [3.5, 4.0, 4.2]},
+    {"nombre": "Fernanda", "notas": [6.2, 6.5, 6.0]},
+    {"nombre": "Tomás", "notas": [4.8, 5.0, 5.2]},
+    {"nombre": "Josefa", "notas": [5.9, 6.0, 6.1]},
+    {"nombre": "Matías", "notas": [3.8, 4.1, 4.0]},
+    {"nombre": "Ignacio", "notas": [6.7, 6.9, 7.0]},
+    {"nombre": "Daniela", "notas": [5.2, 5.4, 5.6]},
+    {"nombre": "Sebastián", "notas": [4.3, 4.5, 4.7]},
+    {"nombre": "Gabriela", "notas": [6.0, 6.2, 6.1]},
+    {"nombre": "Felipe", "notas": [5.7, 5.8, 5.9]},
+    {"nombre": "Antonia", "notas": [4.9, 5.0, 5.1]},
+    {"nombre": "Vicente", "notas": [3.7, 4.0, 4.3]},
+    {"nombre": "Paula", "notas": [6.3, 6.4, 6.5]}
+
+]
+
+#Calcula el promedio del estudiante
+def promedio_estudiante(estudiantes):                            
+def promedio_estudiante(estudiantes):
+    #Retorna el promedio. La suma de las notas, divididas la cantidad de notas de los estudiantes                            
+    return sum(estudiantes["notas"]) / len(estudiantes["notas"])
+
+
+#Lo clasifica dentro de las categorías dependiendo su promedio
+def clasificar_rendimiento(estudiantes):
+    prom = promedio_estudiante(estudiantes)
+    if prom<4.0:
+    prom = promedio_estudiante(estudiantes) #Llama a la funcion para calcular el promedio de los estudiantes
+    if prom<4.0: #Si el estudiante tiene nota menor que 4.0, reprueba
+        return "Reprueba"
+    elif prom>=4.0 and prom<5.0:
+    elif prom>=4.0 and prom<5.0: #Notas mayor o igual a 4.0 y menor que 5.0, suficiente
+        return "Suficiente"
+    elif prom>=5.0 and prom<6.0:
+    elif prom>=5.0 and prom<6.0: #Notas mayor o igual a 5.0 y menor que 6.0, aprueba
+        return "Aprobado"
+    else:
+    else: #Caso contrario, es destacado
+        return "Destacado"
+
+#Genera un reporte de los datos del alumno
+def generar_reporte(lista_estudiantes):
+    reporte_estudiantes=[]
+    for estudiante in lista_estudiantes:
+        promedioes=promedio_estudiante(estudiante)
+        promedio_est=promedio_estudiante(estudiante)
+        rendimiento=clasificar_rendimiento(estudiante)
+        nota_max=max(estudiante["notas"])
+        nota_min=min(estudiante["notas"])
+        rango_notas=nota_max - nota_min
+
+        reporte_estudiantes.append({
+            "nombre": estudiante["nombre"],
+            "promedio": promedioes,
+            "promedio": promedio_est,
+            "rendimiento": rendimiento,
+            "nota_maxima": nota_max,
+            "nota_minima": nota_min,
+            "rango_notas": rango_notas
+        })
+    return reporte_estudiantes
+
+#Cuenta cuantos de cada, dependiendo de su estado
+def contar_por_estado(reporte):
+    conteo_estado={}
+@@ -74,6 +63,139 @@ def filtrar_por_estado(reporte,estado):
+def ordenar_reporte(reporte_estudiantes,clave="promedio",descendente=True):
+    return sorted(reporte_estudiantes,key=lambda fila: fila[clave],reverse=descendente)
+
+def buscar_estudiante(estudiantes, nombre):
+    
+    iterador = 0
+    
+    for iterador in estudiantes:
+        nombre_estudiante = iterador["nombre"]
+
+        if nombre_estudiante.lower() == nombre.lower():
+            return iterador
+    
+    return None
+
+#Busca estudiantes cuyo promedio esta dentro de un rango
+def buscar_por_rango_promedio(reporte, minimo, maximo):
+    """Estudiantes con promedio en [minimo, maximo]."""
+
+    iterador = 0 #Iterador para recorrer los datos
+    resultado = [] #Lista para almacenar los estudiantes que cumplen
+
+    #Bucle para recorrer el reporte
+    for iterador in reporte:
+        
+        promedio = iterador["promedio"] #Obtiene el promedio del estudiante
+        
+        #Verifica que el promedio este dentro del rango
+        if promedio >= minimo and promedio <= maximo:
+            
+            resultado.append(iterador) #Agrega el estudiante a la lista
+    
+    #Retorna la lista de estudiantes que cumplen la condicion
+    return resultado
+
+#Calcula el con menos valor en los datos
+def calcular_minimo(datos):
+    minimo = datos[0]
+    for iterador in datos:
+        if iterador < minimo:
+            minimo = iterador
+    return minimo
+
+
+#Calcula el con mas valor en los datos
+def calcular_maximo(datos):
+    maximo = datos[0]
+    for iterador in datos:
+        if iterador > maximo:
+            maximo = iterador
+    return maximo
+
+#Esta funcion se encarga de sumar los datos 
+def calcular_suma(datos):
+
+    suma = 0
+    iterador = 0
+
+    for iterador in datos:
+        suma = suma + iterador
+    
+    return suma
+
+
+#Esta funcion se encarga de calcular el largo del arreglo
+def calcular_largo(datos):
+
+    iterador = 0
+    contador_largo = 0
+
+    for iterador in datos:
+        contador_largo = contador_largo + 1
+    
+    return contador_largo
+
+
+#Esta funcion calcula el promedio de los datos
+def calcular_promedio(datos):
+
+    promedio = calcular_suma(datos) / calcular_largo(datos)
+    
+    return promedio
+
+#Identifica al estudiante mas consistente e inconsistente
+def analizar_consistencia(estudiantes):
+
+    iterador = 0 #Iterador para recorrer los datos
+
+    mas_consistente = None
+    mas_inconsistente = None
+
+    menor_rango = None
+    mayor_rango = None
+
+    #Bucle para recorrer los estudiantes
+    for iterador in estudiantes:
+
+        notas = iterador["notas"] #Obtiene las notas del estudiante
+
+        minimo = calcular_minimo(notas) #Nota minima
+        maximo = calcular_maximo(notas) #Nota maxima
+
+        rango = maximo - minimo #Diferencia entre max y min
+
+        #Primer caso (inicializar)
+        if menor_rango is None or rango < menor_rango:
+            menor_rango = rango
+            mas_consistente = iterador
+
+        if mayor_rango is None or rango > mayor_rango:
+            mayor_rango = rango
+            mas_inconsistente = iterador
+
+    return mas_consistente, mas_inconsistente
+
+#Imprime el reporte en formato tabla
+def imprimir_tabla(estudiantes):
+
+    print("Nombre       Promedio   Min   Max   Rango")
+    print("------------------------------------------------")
+
+    iterador = 0
+
+    for iterador in estudiantes:
+
+        nombre = iterador["nombre"]
+        notas = iterador["notas"]
+
+        promedio = calcular_promedio(notas)
+        minimo = calcular_minimo(notas)
+        maximo = calcular_maximo(notas)
+
+        rango = maximo - minimo
+
+        print(nombre, "   ", round(promedio,2), "   ", minimo, "   ", maximo, "   ", rango)
+
+reporte = generar_reporte(estudiantes)
+#Prueba para generar el reporte
+print("=== Reporte completo ===")
+@@ -90,3 +212,18 @@ def ordenar_reporte(reporte_estudiantes,clave="promedio",descendente=True):
+print("\n=== Reporte ordenado por promedio ===")
+for fila in ordenar_reporte(reporte):
+    print(fila)
+
+
+busqueda = buscar_estudiante(estudiantes,"ana")
+print(busqueda)
+
+busqueda_rango = buscar_por_rango_promedio(reporte,5.0, 6.0)
+print("Estudiantes con promedio: ",busqueda_rango)
+
+
+imprimir_tabla(estudiantes)
+
+consistente, inconsistente = analizar_consistencia(estudiantes)
+
+print("\nMas consistente:", consistente["nombre"])
+print("Mas inconsistente:", inconsistente["nombre"])
+
+# 3
+
+def aplanar_notas(estudiantes):
+    #aplanar notas
+    todas_las_notas = []
+    
+    for estudiante in estudiantes:
+        todas_las_notas.extend(estudiante["notas"])
+    
+    return todas_las_notas
+
+
+def contar_frecuencias(datos):
+    #contar notas y hacer el diccionario
+    conteo_de_notas = {}
+    
+    for nota in notas:
+        if nota in conteo_de_notas:
+            conteo_de_notas[nota] += 1
+        else:
+            conteo_de_notas[nota] = 1
+    
+    return conteo_de_notas
+
+
+def encontrar_moda(frecuencias):
+    #encontrar y contatar la nota que mas se repite 
+    nota_mas_comun = None
+    apariciones_maximas = 0
+    
+    for nota, apariciones in conteo_de_notas.items():
+        if apariciones > apariciones_maximas:
+            apariciones_maximas = apariciones
+            nota_mas_comun = nota
+    
+    return nota_mas_comun, apariciones_maximas
+
+
+
+def generar_histograma(frecuencias, ancho_max=25):
+    """Imprime un histograma horizontal con barras █."""
+    
+    # Encontrar la frecuencia máxima para escalar
+    frecuencia_maxima = 0
+    for valor in frecuencias:
+        if frecuencias[valor] > frecuencia_maxima:
+            frecuencia_maxima = frecuencias[valor]
+    
+    # Dibujar el histograma
+    for valor in frecuencias:
+        frecuencia = frecuencias[valor]
+        
+        # Calcular el largo proporcional de la barra
+        largo_barra = int((frecuencia / frecuencia_maxima) * ancho_max)
+        barra = "█" * largo_barra
+        
+        print(f"{valor} | {barra} ({frecuencia})")
