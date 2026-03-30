@@ -21,8 +21,7 @@
 
 ]
 
-#Calcula el promedio del estudiante
-def promedio_estudiante(estudiantes):                            
+#Calcula el promedio del estudiante                        
 def promedio_estudiante(estudiantes):
     #Retorna el promedio. La suma de las notas, divididas la cantidad de notas de los estudiantes                            
     return sum(estudiantes["notas"]) / len(estudiantes["notas"])
