@@ -88,21 +88,14 @@ def buscar_estudiante(estudiantes, nombre):
 #Busca estudiantes cuyo promedio esta dentro de un rango
 def buscar_por_rango_promedio(reporte, minimo, maximo):
     """Estudiantes con promedio en [minimo, maximo]."""
-
-    iterador = 0 #Iterador para recorrer los datos
+    iterador = 0 
     resultado = [] #Lista para almacenar los estudiantes que cumplen
-
     #Bucle para recorrer el reporte
     for iterador in reporte:
-        
-        promedio = iterador["promedio"] #Obtiene el promedio del estudiante
-        
+        promedio = iterador["promedio"] 
         #Verifica que el promedio este dentro del rango
         if promedio >= minimo and promedio <= maximo:
-            
             resultado.append(iterador) #Agrega el estudiante a la lista
-    
-    #Retorna la lista de estudiantes que cumplen la condicion
     return resultado
 
 #Calcula el con menos valor en los datos
@@ -113,7 +106,6 @@ def calcular_minimo(datos):
             minimo = iterador
     return minimo
 
-
 #Calcula el con mas valor en los datos
 def calcular_maximo(datos):
     maximo = datos[0]
@@ -121,37 +113,6 @@ def calcular_maximo(datos):
         if iterador > maximo:
             maximo = iterador
     return maximo
-
-#Esta funcion se encarga de sumar los datos 
-def calcular_suma(datos):
-
-    suma = 0
-    iterador = 0
-
-    for iterador in datos:
-        suma = suma + iterador
-    
-    return suma
-
-
-#Esta funcion se encarga de calcular el largo del arreglo
-def calcular_largo(datos):
-
-    iterador = 0
-    contador_largo = 0
-
-    for iterador in datos:
-        contador_largo = contador_largo + 1
-    
-    return contador_largo
-
-
-#Esta funcion calcula el promedio de los datos
-def calcular_promedio(datos):
-
-    promedio = calcular_suma(datos) / calcular_largo(datos)
-    
-    return promedio
 
 #Identifica al estudiante mas consistente e inconsistente
 def analizar_consistencia(estudiantes):
@@ -198,7 +159,7 @@ def imprimir_tabla(estudiantes):
         nombre = iterador["nombre"]
         notas = iterador["notas"]
 
-        promedio = calcular_promedio(notas)
+        promedio = promedio_estudiante(notas)
         minimo = calcular_minimo(notas)
         maximo = calcular_maximo(notas)
 
