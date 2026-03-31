@@ -180,11 +180,42 @@ def imprimir_tabla(estudiantes):
 
         print(nombre, "   ", round(promedio,2), "   ", minimo, "   ", maximo, "   ", rango)
 
+# 2a) Reporte de rendimiento
 reporte = generar_reporte(estudiantes)
-#Prueba para generar el reporte
-print("=== Reporte completo ===")
-@@ -90,3 +212,18 @@ def ordenar_reporte(reporte_estudiantes,clave="promedio",descendente=True):
-print("\n=== Reporte ordenado por promedio ===")
-for fila in ordenar_reporte(reporte):
-    print(fila)
+ 
+print("\n--- REPORTE COMPLETO (TABLA) ---")
+imprimir_tabla(reporte)
+ 
+# 2b) Conteo y filtrado
+print("\n--- CONTEO POR ESTADO ---")
+conteo = contar_por_estado(reporte)
+for estado, cantidad in conteo.items():
+    print(f"  {estado}: {cantidad}")
+ 
+print("\n--- FILTRAR POR ESTADO: Destacado ---")
+destacados = filtrar_por_estado(reporte, "Destacado")
+for r in destacados:
+    print(f"  {r['nombre']}: {r['promedio']}")
+ 
+# 2c) Ordenamiento
+print("\n--- REPORTE ORDENADO POR PROMEDIO (descendente) ---")
+ordenado = ordenar_reporte(reporte)
+for r in ordenado:
+    print(f"  {r['nombre']}: {r['promedio']}")
+ 
+# 2d) Búsqueda
+print("\n--- BUSCAR ESTUDIANTE: 'ana' ---")
+encontrado = buscar_estudiante(estudiantes, "ana")
+print(f"  {encontrado}")
+ 
+print("\n--- BUSCAR POR RANGO DE PROMEDIO (5.0 a 6.0) ---")
+en_rango = buscar_por_rango_promedio(reporte, 5.0, 6.0)
+for r in en_rango:
+    print(f"  {r['nombre']}: {r['promedio']}")
+ 
+# 2e) Consistencia
+print("\n--- CONSISTENCIA ---")
+consistente, inconsistente = analizar_consistencia(estudiantes)
+print(f"  Mas consistente:   {consistente['nombre']}")
+print(f"  Mas inconsistente: {inconsistente['nombre']}")
 
