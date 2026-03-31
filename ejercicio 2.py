@@ -43,30 +43,46 @@ def clasificar_rendimiento(promedio):
 
 #Genera un reporte de los datos del alumno
 def generar_reporte(lista_estudiantes):
-    reporte_estudiantes=[]
+    """Retorna lista de dicts: nombre, promedio, estado, nota_max, nota_min, rango."""
+    reporte = []
     for estudiante in lista_estudiantes:
-        promedioes=promedio_estudiante(estudiante)
-        promedio_est=promedio_estudiante(estudiante)
-        rendimiento=clasificar_rendimiento(estudiante)
-        nota_max=max(estudiante["notas"])
-        nota_min=min(estudiante["notas"])
-        rango_notas=nota_max - nota_min
-
-        reporte_estudiantes.append({
+        promedio = promedio_estudiante(estudiante)
+        estado = clasificar_rendimiento(promedio)
+        nota_max = calcular_maximo(estudiante["notas"])
+        nota_min = calcular_minimo(estudiante["notas"])
+        rango = nota_max - nota_min
+ 
+        reporte.append({
             "nombre": estudiante["nombre"],
-            "promedio": promedioes,
-            "promedio": promedio_est,
-            "rendimiento": rendimiento,
-            "nota_maxima": nota_max,
-            "nota_minima": nota_min,
-            "rango_notas": rango_notas
+            "promedio": round(promedio, 2),
+            "estado": estado,
+            "nota_max": nota_max,
+            "nota_min": nota_min,
+            "rango": round(rango, 2)
         })
-    return reporte_estudiantes
+    return reporte
 
 #Cuenta cuantos de cada, dependiendo de su estado
 def contar_por_estado(reporte):
-    conteo_estado={}
-@@ -74,6 +63,139 @@ def filtrar_por_estado(reporte,estado):
+    """Dict con cantidad por estado."""
+    conteo = {}
+    for estudiante in reporte:
+        estado = estudiante["estado"]
+        if estado in conteo:
+            conteo[estado] += 1
+        else:
+            conteo[estado] = 1
+    return conteo
+ 
+ 
+def filtrar_por_estado(reporte, estado):
+    """Lista de estudiantes con el estado dado."""
+    resultado = []
+    for estudiante in reporte:
+        if estudiante["estado"] == estado:
+            resultado.append(estudiante)
+    return resultado
+    
 def ordenar_reporte(reporte_estudiantes,clave="promedio",descendente=True):
     return sorted(reporte_estudiantes,key=lambda fila: fila[clave],reverse=descendente)
 
