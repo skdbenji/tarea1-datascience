@@ -2,32 +2,44 @@ estudiantes = [
     {"nombre": "Ana", "notas": [6.5, 7.0, 5.8]},
     {"nombre": "Luis", "notas": [4.2, 5.1, 6.0]},
     {"nombre": "Sofía", "notas": [3.9, 4.0, 4.5]},
-
+    {"nombre": "Pedro", "notas": [5.5, 6.1, 5.9]},
+    {"nombre": "Valentina", "notas": [7.0, 6.8, 6.9]},
+    {"nombre": "Javier", "notas": [4.0, 4.2, 4.1]},
+    {"nombre": "Camila", "notas": [5.0, 5.5, 5.8]},
+    {"nombre": "Martín", "notas": [3.5, 4.0, 4.2]},
+    {"nombre": "Fernanda", "notas": [6.2, 6.5, 6.0]},
+    {"nombre": "Tomás", "notas": [4.8, 5.0, 5.2]},
+    {"nombre": "Josefa", "notas": [5.9, 6.0, 6.1]},
+    {"nombre": "Matías", "notas": [3.8, 4.1, 4.0]},
+    {"nombre": "Ignacio", "notas": [6.7, 6.9, 7.0]},
+    {"nombre": "Daniela", "notas": [5.2, 5.4, 5.6]},
+    {"nombre": "Sebastián", "notas": [4.3, 4.5, 4.7]},
+    {"nombre": "Gabriela", "notas": [6.0, 6.2, 6.1]},
+    {"nombre": "Felipe", "notas": [5.7, 5.8, 5.9]},
+    {"nombre": "Antonia", "notas": [4.9, 5.0, 5.1]},
+    {"nombre": "Vicente", "notas": [3.7, 4.0, 4.3]},
+    {"nombre": "Paula", "notas": [6.3, 6.4, 6.5]}
 ]
 
 #Calcula el promedio del estudiante
-def promedio_estudiante(estudiantes):
-    #Retorna el promedio. La suma de las notas, divididas la cantidad de notas de los estudiantes                            
+def promedio_estudiante(estudiantes):                            
     return sum(estudiantes["notas"]) / len(estudiantes["notas"])
-
-
 #Lo clasifica dentro de las categorías dependiendo su promedio
 def clasificar_rendimiento(estudiantes):
-    prom = promedio_estudiante(estudiantes) #Llama a la funcion para calcular el promedio de los estudiantes
-    if prom<4.0: #Si el estudiante tiene nota menor que 4.0, reprueba
+    prom = promedio_estudiante(estudiantes)
+    if prom<4.0:
         return "Reprueba"
-    elif prom>=4.0 and prom<5.0: #Notas mayor o igual a 4.0 y menor que 5.0, suficiente
+    elif prom>=4.0 and prom<5.0:
         return "Suficiente"
-    elif prom>=5.0 and prom<6.0: #Notas mayor o igual a 5.0 y menor que 6.0, aprueba
+    elif prom>=5.0 and prom<6.0:
         return "Aprobado"
-    else: #Caso contrario, es destacado
+    else:
         return "Destacado"
-
 #Genera un reporte de los datos del alumno
 def generar_reporte(lista_estudiantes):
     reporte_estudiantes=[]
     for estudiante in lista_estudiantes:
-        promedio_est=promedio_estudiante(estudiante)
+        promedioes=promedio_estudiante(estudiante)
         rendimiento=clasificar_rendimiento(estudiante)
         nota_max=max(estudiante["notas"])
         nota_min=min(estudiante["notas"])
@@ -35,14 +47,13 @@ def generar_reporte(lista_estudiantes):
 
         reporte_estudiantes.append({
             "nombre": estudiante["nombre"],
-            "promedio": promedio_est,
+            "promedio": promedioes,
             "rendimiento": rendimiento,
             "nota_maxima": nota_max,
             "nota_minima": nota_min,
             "rango_notas": rango_notas
         })
     return reporte_estudiantes
-
 #Cuenta cuantos de cada, dependiendo de su estado
 def contar_por_estado(reporte):
     conteo_estado={}
@@ -63,39 +74,19 @@ def filtrar_por_estado(reporte,estado):
 def ordenar_reporte(reporte_estudiantes,clave="promedio",descendente=True):
     return sorted(reporte_estudiantes,key=lambda fila: fila[clave],reverse=descendente)
 
-def buscar_estudiante(estudiantes, nombre):
-    for estudiante in estudiantes: 
-        if estudiante["nombre"].lower() == nombre.lower():
-            return estudiante
-    return none
+reporte = generar_reporte(estudiantes)
+#Prueba para generar el reporte
+print("=== Reporte completo ===")
+for fila in reporte:
+    print(fila)
 
-def buscar_por_rango_promedio(reporte, minimo, maximo):
-    resultados = []
-    for estudiante in reporte:
-        if minimo <= estudiante["promedio"] <= maximo:
-            resultados.append(estudiante)
-    return resultados
-    
-def analizar_consistencia(reporte):
-    mas_consistente = None
-    mas_inconsistente = None
+print("\n=== Conteo por rendimiento ===")
+print(contar_por_estado(reporte))
 
-    for est in reporte:
-        if mas_consistente is None or est["rango_notas"] < mas_consistente["rango_notas"]:
-            mas_consistente = est
+print("\n=== Estudiantes destacados ===")
+for fila in filtrar_por_estado(reporte, "Destacado"):
+    print(fila)
 
-        if mas_inconsistente is None or est["rango_notas"] > mas_inconsistente["rango_notas"]:
-            mas_inconsistente = est
-
-    print("\n=== ANÁLISIS DE CONSISTENCIA ===")
-    print(f"Más consistente: {mas_consistente['nombre']} (rango: {mas_consistente['rango_notas']})")
-    print(f"Más inconsistente: {mas_inconsistente['nombre']} (rango: {mas_inconsistente['rango_notas']})")
-
-    print("\n=== REPORTE COMPLETO ===")
-    print(f"{'Nombre':<12} {'Prom':<6} {'Estado':<12} {'Max':<5} {'Min':<5} {'Rango':<6}")
-    print("-" * 55)
-
-    for est in reporte:
-        print(f"{est['nombre']:<12} {est['promedio']:<6.2f} {est['rendimiento']:<12} "
-              f"{est['nota_maxima']:<5} {est['nota_minima']:<5} {est['rango_notas']:<6.2f}")
-
+print("\n=== Reporte ordenado por promedio ===")
+for fila in ordenar_reporte(reporte):
+    print(fila)
