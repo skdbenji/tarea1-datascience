@@ -160,25 +160,18 @@ def analizar_consistencia(estudiantes):
     return mas_consistente, mas_inconsistente
 
 #Imprime el reporte en formato tabla
-def imprimir_tabla(estudiantes):
-
-    print("Nombre       Promedio   Min   Max   Rango")
-    print("------------------------------------------------")
-
-    iterador = 0
-
-    for iterador in estudiantes:
-
-        nombre = iterador["nombre"]
-        notas = iterador["notas"]
-
-        promedio = promedio_estudiante(notas)
-        minimo = calcular_minimo(notas)
-        maximo = calcular_maximo(notas)
-
-        rango = maximo - minimo
-
-        print(nombre, "   ", round(promedio,2), "   ", minimo, "   ", maximo, "   ", rango)
+def imprimir_tabla(reporte):
+    print(f"{'Nombre':<12} {'Promedio':>9} {'Estado':<12} {'Min':>5} {'Max':>5} {'Rango':>6}")
+    print("-" * 55)
+    for fila in reporte:
+        print(
+            f"{fila['nombre']:<12} "
+            f"{fila['promedio']:>9.2f} "
+            f"{fila['estado']:<12} "
+            f"{fila['nota_min']:>5.1f} "
+            f"{fila['nota_max']:>5.1f} "
+            f"{fila['rango']:>6.2f}"
+        )
 
 # 2a) Reporte de rendimiento
 reporte = generar_reporte(estudiantes)
