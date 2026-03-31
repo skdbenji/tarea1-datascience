@@ -175,21 +175,3 @@ print("\n=== Reporte ordenado por promedio ===")
 for fila in ordenar_reporte(reporte):
     print(fila)
 
-
-busqueda = buscar_estudiante(estudiantes,"ana")
-print(busqueda)
-
-busqueda_rango = buscar_por_rango_promedio(reporte,5.0, 6.0)
-print("Estudiantes con promedio: ",busqueda_rango)
-
-
-imprimir_tabla(estudiantes)
-
-consistente, inconsistente = analizar_consistencia(estudiantes)
-
-print("\nMas consistente:", consistente["nombre"])
-print("Mas inconsistente:", inconsistente["nombre"])
-
-        barra = "█" * largo_barra
-        
-        print(f"{valor} | {barra} ({frecuencia})")
