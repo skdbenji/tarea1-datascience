@@ -28,21 +28,18 @@ def promedio_estudiante(estudiantes):
 
 
 #Lo clasifica dentro de las categorías dependiendo su promedio
-def clasificar_rendimiento(estudiantes):
-    prom = promedio_estudiante(estudiantes)
-    if prom<4.0:
-    prom = promedio_estudiante(estudiantes) #Llama a la funcion para calcular el promedio de los estudiantes
-    if prom<4.0: #Si el estudiante tiene nota menor que 4.0, reprueba
-        return "Reprueba"
-    elif prom>=4.0 and prom<5.0:
-    elif prom>=4.0 and prom<5.0: #Notas mayor o igual a 4.0 y menor que 5.0, suficiente
+def clasificar_rendimiento(promedio):
+    """Retorna: Reprobado (<4.0), Suficiente (4.0-4.9),
+    Aprobado (5.0-5.9), Destacado (>=6.0)."""
+    if promedio < 4.0:
+        return "Reprobado"
+    elif promedio < 5.0:
         return "Suficiente"
-    elif prom>=5.0 and prom<6.0:
-    elif prom>=5.0 and prom<6.0: #Notas mayor o igual a 5.0 y menor que 6.0, aprueba
+    elif promedio < 6.0:
         return "Aprobado"
     else:
-    else: #Caso contrario, es destacado
         return "Destacado"
+ 
 
 #Genera un reporte de los datos del alumno
 def generar_reporte(lista_estudiantes):
